@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credit Scoring Model</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      width: 400px;
+    }
+    button:hover {
+      transform: scale(1.05);
+      transition: 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="flex justify-center items-center min-h-screen">
+
+<div class="card">
+  <h2 class="text-3xl font-bold mb-6 text-center text-indigo-700">Credit Scoring Model</h2>
+
+  <form id="creditForm" class="space-y-4">
+    <label class="block">Income:</label>
+    <input type="number" id="income" class="w-full p-2 border rounded" placeholder="Enter Income" required>
+
+    <label class="block">Loan Amount:</label>
+    <input type="number" id="loan" class="w-full p-2 border rounded" placeholder="Enter Loan Amount" required>
+
+    <label class="block">Credit History (1 = Good, 0 = Bad):</label>
+    <input type="number" id="history" min="0" max="1" class="w-full p-2 border rounded" placeholder="Enter 0 or 1" required>
+
+    <button type="button" onclick="predictScore()" class="w-full bg-indigo-600 text-white p-3 rounded hover:bg-indigo-800">Predict Credit Score</button>
+  </form>
+
+  <div id="result" class="mt-4 text-center text-lg font-semibold text-indigo-700"></div>
+</div>
+
+<script>
+function predictScore() {
+  let income = parseFloat(document.getElementById("income").value);
+  let loan = parseFloat(document.getElementById("loan").value);
+  let history = parseInt(document.getElementById("history").value);
+  
+  let score = 0;
+
+  // Rule-Based Classification
+  if (income > 70000 && history === 1) {
+    score = 800;
+  } else if (income > 50000 && loan < 30000 && history === 1) {
+    score = 700;
+  } else if (income > 30000 && history === 1) {
+    score = 600;
+  } else if (history === 0) {
+    score = 400;
+  } else {
+    score = 500;
+  }
+
+  let result = `Your Credit Score is: ${score}`;
+  document.getElementById("result").innerHTML = result;
+}
+</script>
+
+</body>
+</html>
